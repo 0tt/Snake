@@ -19,10 +19,30 @@
   * hCol: The column where the head is at
   */
 
+function randRange(a, b){
+  return Math.floor((Math.random() * b) + a)
+}
+function randomDirection(currentDirection, grid, fRow, fCol, hRow, hCol){
+
+}
+
 function calculateMove(currentDirection, grid, fRow, fCol, hRow, hCol) {
-  console.log(grid);
-	currentDirection++;
-	if (currentDirection == 4)
-		currentDirection = 0;
-	return currentDirection;
+  //console.log(grid);
+  if(hRow>fRow){
+    if(hRow>0 && grid[hRow-1][hCol]!=1) return 0;
+  }
+  if(hRow<fRow){
+    if(hRow<grid.length-1 && grid[hRow+1][hCol]!=1) return 2;
+  }
+  if(hCol>fCol){
+    if(hCol>0 && grid[hRow][hCol-1]!=1) return 3;
+  }
+  if(hCol<fCol){
+    if(hCol<grid[0].length-1 && grid[hRow][hCol+1]!=1) return 1;
+  }
+  
+  if(hRow>0 && grid[hRow-1][hCol]!=1) return 0;
+  if(hRow<grid.length-1 && grid[hRow+1][hCol]!=1) return 2;
+  if(hCol>0 && grid[hRow][hCol-1]!=1) return 3;
+  if(hCol<grid[0].length-1 && grid[hRow][hCol+1]!=1) return 1;
 }
