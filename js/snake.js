@@ -295,10 +295,11 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             var temp = calculateMove(currentDirection);
             var time = performance.now() - startTime;
             if (time < threshold)
-                currentDirection = temp;
+            //    currentDirection = temp;
+                   console.log("hi");
             else
                 console.log("ERROR: We didn't calculate the move in time!");
-            setTimeout(function(){me.go();}, 0);
+            setTimeout(function(){me.go();}, snakeSpeed);
         };
         
         /**

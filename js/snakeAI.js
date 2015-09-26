@@ -6,7 +6,7 @@
   *		3: left
   *       0
   *     3   1
-  *		  2
+  *	      2
   * currentDirection: The last direction moved
   */
 
