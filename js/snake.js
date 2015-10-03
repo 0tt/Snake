@@ -14,7 +14,7 @@ var globalFrow = 0;
 var globalFcol = 0;
 
 var SNAKE = SNAKE || {};
-
+calculateMove
 /**
 * @method addEventListener
 * @param {Object} obj The object to add an event listener to.
