@@ -132,5 +132,5 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 		}
 	}
 	console.log("A* has been executed and has been unable to find a path.");
-	return null;
+	return -1;
 }
