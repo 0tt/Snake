@@ -36,7 +36,7 @@ function getAdjacent(gridPoints,point) {
 
 }
 
-// g, h, f are used in astar
+// g, h, diaginalPenalty, f are used in astar
 function g(obj) {
 	return obj.list.length -1;
 }
@@ -45,9 +45,32 @@ function h(obj,endX,endY) {
 	return Math.sqrt(Math.pow((obj.point.x - endX), 2) + Math.pow(obj.point.y - endY, 2)); 
 }
 
-function f(obj,endX,endY) {
-	return g(obj) + h(obj,endX,endY);
+function diaginalPenalty(obj) {
+	var list = obj.list;
+	var penalty = 0;
+	var lastDirection = -1;
+	for (var i = 1; i < list.length; i++) {
+		var currentDirection = -1;
+		if (list[i - 1].x > list[i].x) {
+			currentDirection = 0;
+		} else if (list[i - 1].x < list[i].x) {
+			currentDirection = 1;
+		} else if (list[i - 1].y > list[i].y) {
+			currentDirection = 2;
+		} else if (list[i - 1].y < list[i].y) {
+			currentDirection = 3;
+		}
+		if (currentDirection != lastDirection)
+			penalty++;
+		lastDirection = currentDirection;
+	}
 }
+
+function f(obj,endX,endY, currentDir) {
+	return g(obj) + h(obj,endX,endY) + diaginalPenalty(obj);
+}
+
+function isTraversable
 
 /**
   * Finds the shortest path from start to end using the A-Star algorithm.
@@ -77,7 +100,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 		var current = processingList[0];
 		var remove = 0;
 		for (var i = 1; i < processingList.length; i++) {
-			if (f(current, endX, endY) > f(processingList[i],endX, endY)) {
+			if (f(current, endX, endY, currentDir) > f(processingList[i],endX, endY, currentDir)) {
 				current = processingList[i];
 				remove = i;
 			}
