@@ -31,5 +31,20 @@ function calculateMove(currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody
   if(result===-1){
 		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
 	}
+/*
+	var convexHull = new ConvexHullGrahamScan();
+	for (var x = 1; x < grid.length-1; x++) {
+			for (var y = 1; y < grid[0].length-1; y++) {
+				if (grid[x][y] == 1)
+					convexHull.addPoint(x, y);
+			}
+	}
+	var hull = convexHull.getHull();
+	var output = "";
+	for (var i = 0; i < hull.length; i++) {
+		output += "(" + hull[i].x + "," + hull[i].y + "),";
+	}
+	console.log(output);
+*/
 	return result;
 }
