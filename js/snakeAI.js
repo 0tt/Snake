@@ -26,7 +26,7 @@
   *                        node points to the starting node, not Null).
   */
 
-function calculateMove(currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
+function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
   var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
   if(result===-1){
 		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
