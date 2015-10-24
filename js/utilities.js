@@ -1,3 +1,20 @@
+// returns whether or not a point is traversable
+function isTraversable(snakeBody, point, path) {
+	if (point == null || path == null || snakeBody == null)
+		return false; // smth went wrong
+	if (point.value < 1)
+		return true;
+	else {
+		var node = snakeBody.b0;
+		for (var i = 0; i < path.length; i++) {
+			if (node.x == point.x && node.y == point.y)
+				return true;
+			node = node.next;
+		}
+		return false;
+	}
+}
+
 // Returns a point object, given where it is in the grid and what its value is.
  function pointOfGrid(endX, endY, pValue) {
  	var toReturn = {
@@ -10,23 +27,27 @@
  }
 
 // Returns a list of adjacent points, given a grid of Point objects, and a point object
-function getAdjacent(gridPoints,point) {
+function getAdjacent(gridPoints,point, snakeBody, path) {
 	try {
 		var adjTiles = [];
 		var up = gridPoints[point.x][point.y + 1];
-        if (up !== null && up.value <= 0) {
+//        if (up !== null && up.value <= 0) {
+		if (isTraversable(snakeBody, up, path)) {
             adjTiles.push(up);
 		}
 		var down = gridPoints[point.x][point.y - 1];
-        if (down !== null && down.value <= 0) {
+//        if (down !== null && down.value <= 0) {
+		if (isTraversable(snakeBody, down, path)) {
             adjTiles.push(down);
 		}
 		var left = gridPoints[point.x - 1][point.y];
-        if (left !== null && left.value <= 0) {
+		if (isTraversable(snakeBody, left, path)) {
+//        if (left !== null && left.value <= 0) {
             adjTiles.push(left);
 		}
         var right = gridPoints[point.x + 1][point.y];
-        if (right !== null && right.value <= 0) {
+//        if (right !== null && right.value <= 0) {
+		if (isTraversable(snakeBody, right, path)) {
             adjTiles.push(right);
 		}
         return adjTiles;
@@ -70,6 +91,8 @@ function f(obj,endX,endY) {
 	return g(obj) + h(obj,endX,endY) + diaginalPenalty(obj);
 }
 
+
+
 /**
   * Finds the shortest path from start to end using the A-Star algorithm.
   * grid: defined as in snakeAI.js
@@ -104,7 +127,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 			}
 		}
 		processingList.splice(remove,1);
-		var adjacent = getAdjacent(gridPoints, current.point);
+		var adjacent = getAdjacent(gridPoints, current.point, snakeBody, current.list);
 		for(var i =  0; i < adjacent.length; i++)
 		{
 			if(!adjacent[i].visited)
