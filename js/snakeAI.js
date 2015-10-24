@@ -27,7 +27,12 @@
   */
 
 function calculateMove(currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody) {
-  return astar(grid, hRow, hCol, fRow, fCol);
+  result = astar(grid, hRow, hCol, fRow, fCol);
+  if(result===-1){
+		result=stackOff(grid, hRow, hCol, fRow, fCol);
+		console.log("Stacking Off: "+result);
+	}
+	return result;
   // TODO: Decide whether to do an A-Star for the fruit, or stack off to the side, call the corresponding function, and return its value.
   //       View utilities.js and snake.js for function params
 }
