@@ -29,8 +29,7 @@
 function calculateMove(currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody) {
   var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
   if(result===-1){
-		result=stackOff(grid, hRow, hCol, fRow, fCol);
-		console.log("Stacking Off: "+result);
+		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol);
 	}
 	return result;
 }
