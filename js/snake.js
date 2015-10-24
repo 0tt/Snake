@@ -305,9 +305,8 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             try {
                 var startTime = performance.now();
                 var temp = calculateMove(currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody);
-								//console.log(temp);
                 if (temp.isNaN)
-                    throw "Something went VERY VERY wrong.";
+                    throw "temp is NaN";
                 var time = performance.now() - startTime;
                 if (time < threshold)
                     currentDirection = temp;
@@ -319,7 +318,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 	                setTimeout(function(){me.go();}, threshold-time);
 								}
             }catch(err) {
-                console.log("ERROR: Something went very wrong.");
+                console.log(err);
                 setTimeout(function(){me.go();}, threshold);
             }
         };
