@@ -66,11 +66,9 @@ function diaginalPenalty(obj) {
 	}
 }
 
-function f(obj,endX,endY, currentDir) {
+function f(obj,endX,endY) {
 	return g(obj) + h(obj,endX,endY) + diaginalPenalty(obj);
 }
-
-function isTraversable
 
 /**
   * Finds the shortest path from start to end using the A-Star algorithm.
@@ -100,7 +98,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 		var current = processingList[0];
 		var remove = 0;
 		for (var i = 1; i < processingList.length; i++) {
-			if (f(current, endX, endY, currentDir) > f(processingList[i],endX, endY, currentDir)) {
+			if (f(current, endX, endY) > f(processingList[i],endX, endY)) {
 				current = processingList[i];
 				remove = i;
 			}
