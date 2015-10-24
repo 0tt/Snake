@@ -8,8 +8,11 @@ http://patorjk.com/games/snake
 * @module Snake
 * @class SNAKE
 */
-
+var DEBUG=true;
 var threshold = 25;
+if(DEBUG){
+	threshold=1000;
+}
 var globalFrow = 0;
 var globalFcol = 0;
 
@@ -287,7 +290,11 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             //    setTimeout(function(){me.go();}, snakeSpeed);
             } else if (grid[newHead.row][newHead.col] > 0) {
                 me.handleDeath();
-                setTimeout(function(){me.go();}, 100);
+								if(DEBUG){
+	                setTimeout(function(){me.go();}, 1000);
+								}else{
+	                setTimeout(function(){me.go();}, 100);
+								}
                 return;
             } else if (grid[newHead.row][newHead.col] === playingBoard.getGridFoodValue()) {
                 grid[newHead.row][newHead.col] = 1;
@@ -298,6 +305,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
             try {
                 var startTime = performance.now();
                 var temp = calculateMove(currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody);
+								//console.log(temp);
                 if (temp.isNaN)
                     throw "Something went VERY VERY wrong.";
                 var time = performance.now() - startTime;
@@ -305,7 +313,11 @@ SNAKE.Snake = SNAKE.Snake || (function() {
                     currentDirection = temp;
                 else
                     console.log("ERROR: We didn't calculate the move in time!");
-                setTimeout(function(){me.go();}, threshold - time);
+								if(DEBUG){
+	                setTimeout(function(){me.go();}, 0);
+								}else{
+	                setTimeout(function(){me.go();}, threshold-time);
+								}
             }catch(err) {
                 console.log("ERROR: Something went very wrong.");
                 setTimeout(function(){me.go();}, threshold);
