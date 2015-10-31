@@ -8,7 +8,7 @@ http://patorjk.com/games/snake
  * @module Snake
  * @class SNAKE
  */
-var DEBUG=false;
+var DEBUG=true;
 var threshold = 25;
 if(DEBUG){
 	threshold=1000;

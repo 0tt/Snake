@@ -94,7 +94,6 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
 
 
 // using convex hull
-
 	// var convexHull = new ConvexHullGrahamScan();
 	// var node = snakeBody.b0;
  //  do {
@@ -118,5 +117,7 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
 	// }
 	// console.log(output);
 
-	// return result;
+
+
+	return result;
 }
