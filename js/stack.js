@@ -134,7 +134,7 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 		deltaColumn = -1;
 	}
 	// console.log("plz");
-	var lengthOfPath = floodFill(grid, headRow + deltaRow, headCol + deltaColumn);
+	var lengthOfPath = floodFill(grid, headRow + deltaRow, headCol + deltaColumn, snakeLength);
 	//numBlocksByHead = 0;
 	//numBlocksByHead += (grid[headRow + deltaRow][headCol-1 + deltaColumn] > 0) ? 1 : 0;
 	//numBlocksByHead += (grid[headRow + deltaRow][headCol+1 + deltaColumn] > 0) ? 1 : 0;
