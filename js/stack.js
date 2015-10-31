@@ -47,11 +47,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 		switch (currentDirection) {
 			case 0:
 				// Up
-				if (grid[headRow - 1][headCol] > 0) {
-//					console.log("up occupied: " + grid[headRow - 1][headCol]);
-					if (grid[headRow][headCol-1] <= 0) {
-//						console.log("Moving left: " + grid[headRow][headCol - 1]);
-
 				if (headRow-1 < 0 || grid[headRow - 1][headCol] > 0) {
 					console.log("up occupied: " + grid[headRow - 1][headCol]);
 					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
@@ -66,10 +61,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 1:
 				// Right
-				if (grid[headRow][headCol+1] > 0) {
-					// console.log("right occupied: " + grid[headRow][headCol+1]);
-					if (grid[headRow+1][headCol] <= 0) {
-
 				if (headCol+1 >= grid[0].length || grid[headRow][headCol+1] > 0) {
 					console.log("right occupied: " + grid[headRow][headCol+1]);
 					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
@@ -83,10 +74,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 2:
 				// Down
-				if (grid[headRow+1][headCol] > 0) {
-					// console.log("down occupied: " + grid[headRow+1][headCol]);
-					if (grid[headRow][headCol-1] <= 0) {
-						// console.log("Moving left: " + grid[headRow][headCol-1]);
 				if (headRow+1 >= grid.length || grid[headRow+1][headCol] > 0) {
 					console.log("down occupied: " + grid[headRow+1][headCol]);
 					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
@@ -101,10 +88,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 3:
 				// Left
-				if (grid[headRow][headCol-1] > 0) {
-					// console.log("left occupied: " + grid[headRow][headCol-1]);
-					if (grid[headRow+1][headCol] <= 0) {
-
 				if (headCol-1 < 0 || grid[headRow][headCol-1] > 0) {
 					console.log("left occupied: " + grid[headRow][headCol-1]);
 					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
