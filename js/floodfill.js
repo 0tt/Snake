@@ -7,24 +7,24 @@ function floodFill(grid, row, col) {
 	var previousVal = grid[row][col];
 	grid[row][col] = 2;
 	var longest = 0;
-	if (grid[row-1][col] <= 0) {
+	if (row-1 >= 0 && grid[row-1][col] <= 0) {
 		var l = floodFill(grid, row-1, col);
 		if (l > longest) {
 			longest = l;
 		}
-	} else if (grid[row+1][col] <= 0) {
+	} else if (row+1 < grid.length && grid[row+1][col] <= 0) {
 		var l = floodFill(grid, row+1, col);
 		if (l > longest) {
 			longest = l;
 		}
 
-	} else if (grid[row][col-1] <= 0) {
+	} else if (col-1 >= 0 && grid[row][col-1] <= 0) {
 		var l = floodFill(grid, row, col-1);
 		if (l > longest) {
 			longest = l;
 		}
 
-	} else if (grid[row][col+1] <= 0) {
+	} else if (col+1 < grid[0].length && grid[row][col+1] <= 0) {
 		var l = floodFill(grid, row, col+1);
 		if (l > longest) {
 			longest = l;
