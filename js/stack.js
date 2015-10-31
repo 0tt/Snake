@@ -10,15 +10,6 @@
 function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, snakeLength, recurseCounter) {
 	// Direction to move
 	var directionToMove = 0;
-//	console.log(headCol + " " + headRow);
-
-	// Determine if we want to seek to an edge or stack
-	var numBlocksByHead = 0;
-	numBlocksByHead += (grid[headRow][headCol-1] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow][headCol+1] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow-1][headCol] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow+1][headCol] > 0) ? 1 : 0;
-//	console.log("blocks by head:" + numBlocksByHead);	
 	if (headCol === 0 || headRow === 0) {
 		console.log("OH CRAP, WE DUN GOOFED");
 	}
@@ -41,7 +32,8 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 	
 //	console.log("direction: " + currentDirection);
 	if (numBlocksByHead > 1) {
-//		console.log("stacking");
+		console.log("stacking");
+		console.log("direction: " + currentDirection);
 		// stack
 		var turn = false;
 		switch (currentDirection) {
@@ -101,11 +93,11 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 		}
 		if (!turn) {
-			// console.log("Not changing direction in stack, moving: " + currentDirection);
+			console.log("Not changing direction in stack, moving: " + currentDirection);
 			directionToMove = currentDirection;
 		}
 	} else {
-		// console.log("Seeking");
+		 console.log("Seeking");
 		// seek to the edge we came from
 		//directionToMove = currentDirection;
 		directionToMove = (currentDirection + 1) % 4;
@@ -129,17 +121,17 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 	var deltaRow;
 	var deltaColumn;
 	if (directionToMove === 0) {
-		deltaRow = 0;
-		deltaColumn = -1;
-	} else if (directionToMove === 1) {
-		deltaRow = 1;
-		deltaColumn = 0;
-	} else if (directionToMove === 2) {
-		deltaRow = 0;
-		deltaColumn = 1;
-	} else {
 		deltaRow = -1;
 		deltaColumn = 0;
+	} else if (directionToMove === 1) {
+		deltaRow = 0;
+		deltaColumn = 1;
+	} else if (directionToMove === 2) {
+		deltaRow = 1;
+		deltaColumn = 0;
+	} else {
+		deltaRow = 0;
+		deltaColumn = -1;
 	}
 	// console.log("plz");
 	var lengthOfPath = floodFill(grid, headRow + deltaRow, headCol + deltaColumn);
@@ -148,20 +140,14 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 	//numBlocksByHead += (grid[headRow + deltaRow][headCol+1 + deltaColumn] > 0) ? 1 : 0;
 	//numBlocksByHead += (grid[headRow-1 + deltaRow][headCol + deltaColumn] > 0) ? 1 : 0;
 	//numBlocksByHead += (grid[headRow+1 + deltaRow][headCol + deltaColumn] > 0) ? 1 : 0;
-	// console.log("Path Size: " + lengthOfPath + ", snake size: " + snakeLength);
-	if (lengthOfPath < snakeLength && recurseCounter < 1) {
-		// console.log("Recursing due to possible trap");
-		// console.log("Want to move in direction: " + directionToMove);
-		var date = new Date();
-		var curDate = null
-		//isPaused = true;
-		//do {
-		//	curDate = newDate();
-		//} while (curDate - date < 100000);
+	console.log("Path Size: " + lengthOfPath + ", snake size: " + snakeLength);
+	if (lengthOfPath < snakeLength && recurseCounter < 2) {
+		console.log("Recursing due to possible trap");
+		console.log("Want to move in direction: " + directionToMove);
 		grid[headRow + deltaRow][headCol + deltaColumn] = 2;
 		directionToMove = stackOff(currentDirection, grid, headRow, headCol, foodRow, foodCol, recurseCounter + 1);
 		grid[headRow + deltaRow][headCol + deltaColumn] = 0;
 	}
-	// console.log("Moving in direction: " + directionToMove);
+	console.log("Moving in direction: " + directionToMove);
 	return directionToMove;
 }
