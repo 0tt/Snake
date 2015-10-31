@@ -10,21 +10,24 @@
 function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, snakeLength, recurseCounter) {
 	// Direction to move
 	var directionToMove = 0;
+	if (headCol === 0 || headRow === 0) {
+		console.log("OH CRAP, WE DUN GOOFED");
+	}
 	console.log(headCol + " " + headRow);
 
 	// Determine if we want to seek to an edge or stack
 	var numBlocksByHead = 0;
-	numBlocksByHead += (grid[headRow][headCol-1] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow][headCol+1] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow-1][headCol] > 0) ? 1 : 0;
-	numBlocksByHead += (grid[headRow+1][headCol] > 0) ? 1 : 0;
+	numBlocksByHead += (headCol-1 < 0 || grid[headRow][headCol-1] > 0) ? 1 : 0;
+	numBlocksByHead += (headCol+1 >= grid[0].length || grid[headRow][headCol+1] > 0) ? 1 : 0;
+	numBlocksByHead += (headRow-1 < 0 || grid[headRow-1][headCol] > 0) ? 1 : 0;
+	numBlocksByHead += (headRow+1 >= grid.length || grid[headRow+1][headCol] > 0) ? 1 : 0;
 	console.log("blocks by head:" + numBlocksByHead);	
 	
-	console.log("l" + grid[headRow][headCol-1]);
-	console.log("r" + grid[headRow][headCol+1]);
-	console.log("u" + grid[headRow-1][headCol]);
-	console.log("d" + grid[headRow+1][headCol]);
-	console.log("h" + grid[headRow][headCol]);
+//	console.log("l" + grid[headRow][headCol-1]);
+//	console.log("r" + grid[headRow][headCol+1]);
+//	console.log("u" + grid[headRow-1][headCol]);
+//	console.log("d" + grid[headRow+1][headCol]);
+//	console.log("h" + grid[headRow][headCol]);
 
 	
 	console.log("direction: " + currentDirection);
@@ -35,52 +38,56 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 		switch (currentDirection) {
 			case 0:
 				// Up
-				if (grid[headRow - 1][headCol] > 0) {
+				if (headRow-1 < 0 || grid[headRow - 1][headCol] > 0) {
 					console.log("up occupied: " + grid[headRow - 1][headCol]);
-					if (grid[headRow][headCol-1] <= 0) {
+					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
 						console.log("Moving left: " + grid[headRow][headCol - 1]);
 						directionToMove = 3;
-					} else if (grid[headRow][headCol+1] <= 0) {
+						turn = true;
+					} else if (headCol+1 < grid[0].length && grid[headRow][headCol+1] <= 0) {
 						directionToMove = 1;
+						turn = true;
 					}
-					turn = true;
 				}
 				break;
 			case 1:
 				// Right
-				if (grid[headRow][headCol+1] > 0) {
+				if (headCol+1 >= grid[0].length || grid[headRow][headCol+1] > 0) {
 					console.log("right occupied: " + grid[headRow][headCol+1]);
-					if (grid[headRow+1][headCol] <= 0) {
+					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
 						directionToMove = 2;
-					} else if (grid[headRow-1][headCol] <= 0) {
+						turn = true;
+					} else if (headRow-1 >= 0 && grid[headRow-1][headCol] <= 0) {
 						directionToMove = 0;
+						turn = true;
 					}
-					turn = true;
 				}
 				break;
 			case 2:
 				// Down
-				if (grid[headRow+1][headCol] > 0) {
+				if (headRow+1 >= grid.length || grid[headRow+1][headCol] > 0) {
 					console.log("down occupied: " + grid[headRow+1][headCol]);
-					if (grid[headRow][headCol-1] <= 0) {
+					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
 						console.log("Moving left: " + grid[headRow][headCol-1]);
 						directionToMove = 3;
-					} else if (grid[headRow][headCol+1] <= 0) {
+						turn = true;
+					} else if (headCol+1 < grid[0].length && grid[headRow][headCol+1] <= 0) {
 						directionToMove = 1;
+						turn = true;
 					}
-					turn = true;
 				}
 				break;
 			case 3:
 				// Left
-				if (grid[headRow][headCol-1] > 0) {
+				if (headCol-1 < 0 || grid[headRow][headCol-1] > 0) {
 					console.log("left occupied: " + grid[headRow][headCol-1]);
-					if (grid[headRow+1][headCol] <= 0) {
+					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
 						directionToMove = 2;
-					} else if (grid[headRow-1][headCol] <= 0) {
+						turn = true;
+					} else if (headRow-1 >= 0 && grid[headRow-1][headCol] <= 0) {
 						directionToMove = 0;
+						turn = true;
 					}
-					turn = true;
 				}
 				break;
 		}
