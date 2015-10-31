@@ -13,10 +13,11 @@ Currently only works on certain sizes of grids. If you're having trouble running
 
 ##TODO
 ###AI
-1. Use the snake body information to take into account if the head of the snake will get to a point before or after the tail will move past it
-2. Get stacking function working properly
-3. Continue work on deciding which of the above to do
+1. Get stacking function working properly
+2. Continue work on deciding whether to stack or astar
 
 ###Engine
 1. Remove key listeners
 2. Make snake blocks surrounded by black, not blue
+3. Get restart to work
+4. Handle death better
