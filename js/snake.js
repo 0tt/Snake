@@ -8,7 +8,7 @@ http://patorjk.com/games/snake
  * @module Snake
  * @class SNAKE
  */
-var DEBUG=true;
+var DEBUG=false;
 var threshold = 25;
 if(DEBUG){
 	threshold=1000;
@@ -313,6 +313,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 					// setTimeout(function(){me.go();}, snakeSpeed);
 				}
 				try {
+
 					var startTime = performance.now();
 					var temp = calculateMove(moveType, currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody, me.snakeLength);
 					if (temp.isNaN)
@@ -322,6 +323,25 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 						currentDirection = temp;
 					else
 						console.log("ERROR: We didn't calculate the move in time!");
+					var newHeadR = newHead.row;
+					var newHeadC = newHead.col;
+					switch(temp) {
+						case(0):
+							newHeadR--;
+							break;
+						case(1):
+							newHeadC++;
+							break;
+						case(2):
+							newHeadR++;
+							break;
+						case(3):
+							newHeadC--;
+							break;
+					}
+					if (grid[newHeadR][newHeadC] > 0) {
+						console.log('%c Oh my heavens! ', 'background: #222; color: #bada55');
+					}
 					if(DEBUG){
 						setTimeout(function(){me.go();}, 0);
 					}else{

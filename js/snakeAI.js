@@ -32,7 +32,11 @@
   var minimumDistance = 10000000000;
 
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
+  // var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+
   // using length to food to determine when to do astar - working (we think)
+  var force = false;
+  var astar_object = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
   if (lastFoodRow != fRow || lastFoodCol != fCol) {
     lastFoodRow = fRow;
     lastFoodCol = fCol;
@@ -43,23 +47,27 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
       node = node.next;
       length++;
     } while (node != snakeBody.b0);
-    numToDo = length * 2;
+    numToDo = Math.floor(length * 1.2);
     numHaveDone = 0;
     var minimumDistance = 10000000000;
+    force = true;
+  } else {
+    force = false;
   }
   var result;
-  if (numToDo > numHaveDone || astar_length(grid, hRow, hCol, fRow, fCol,snakeBody) - 5 > minimumDistance) {
+  if (  numToDo > numHaveDone ||  force || astar_object.len > minimumDistance) {
     console.log("stacking...");
     result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
     numHaveDone++;
   } else {
     console.log("astar...");
-    result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+    result = astar_object.dir;
     if(result===-1){
       result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
     }
+    minimumDistance = Math.min(minimumDistance,astar_object.len);
   }
-  minimumDistance = Math.min(minimumDistance,astar_length(grid, hRow, hCol, fRow, fCol,snakeBody));
+  
 
   // using length of snake to determine how many times to stack off to side
   // works (we think)

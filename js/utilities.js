@@ -140,13 +140,13 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 				if (adjacent[i].x == endX && adjacent[i].y == endY) {
 					var secondItem = newlist[1];
 					if (secondItem.x > startX) 
-						return 2;
+						return {dir:2,len:newlist.length};
 					else if (secondItem.x < startX)
-						return 0;
+						return {dir:0,len:newlist.length};
 					else if (secondItem.y > startY)
-						return 1;
+						return {dir:1,len:newlist.length};
 					else
-						return 3;
+						return {dir:3,len:newlist.length};
 				}
 				var addTo = {
 					point: gridPoints[adjacent[i].x][adjacent[i].y],
@@ -157,7 +157,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 		}
 	}
 	console.log("A* has been executed and has been unable to find a path.");
-	return -1;
+	return {dir:-1,len:Number.MAX_SAFE_INTEGER};
 }
 
 // returns the length to the food from the head of the snake
@@ -207,5 +207,5 @@ function astar_length(grid, startX, startY, endX, endY, snakeBody) {
 		}
 	}
 	console.log("A* has been executed and has been unable to find a path.");
-	return -1;
+	return Number.MAX_SAFE_INTEGER;
 }
