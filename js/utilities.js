@@ -1,3 +1,5 @@
+
+
 // returns whether or not a point is traversable
 function isTraversable(snakeBody, point, path) {
 	if (point == null || path == null || snakeBody == null)
@@ -145,6 +147,56 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 						return 1;
 					else
 						return 3;
+				}
+				var addTo = {
+					point: gridPoints[adjacent[i].x][adjacent[i].y],
+					list: newlist
+				};
+				processingList.push(addTo);
+			}
+		}
+	}
+	console.log("A* has been executed and has been unable to find a path.");
+	return -1;
+}
+
+// returns the length to the food from the head of the snake
+function astar_length(grid, startX, startY, endX, endY, snakeBody) {
+	var gridPoints = [];
+	for (var i = 0; i < grid.length; i++) {
+		gridPoints.push([]);
+		for(var j = 0; j < grid.length; j++){
+			gridPoints[i].push(pointOfGrid(i,j, grid[i][j]));
+		}
+	}
+	var first = {
+		point:gridPoints[startX][startY],
+		list:[gridPoints[startX][startY]],
+	};
+	first.point.visited = true;
+	var processingList = [];
+	processingList.push(first);
+	while(processingList.length !== 0) {
+		var current = processingList[0];
+		var remove = 0;
+		for (var i = 1; i < processingList.length; i++) {
+			if (f(current, endX, endY) > f(processingList[i],endX, endY)) {
+				current = processingList[i];
+				remove = i;
+			}
+		}
+		processingList.splice(remove,1);
+		var adjacent = getAdjacent(gridPoints, current.point, snakeBody, current.list);
+		for(var i =  0; i < adjacent.length; i++)
+		{
+			if(!adjacent[i].visited)
+			{
+				adjacent[i].visited = true;
+				var newlist = current.list.slice();
+				newlist.push(adjacent[i]);
+				if (adjacent[i].x == endX && adjacent[i].y == endY) {
+					var secondItem = newlist[1];
+					return newlist.length;
 				}
 				var addTo = {
 					point: gridPoints[adjacent[i].x][adjacent[i].y],

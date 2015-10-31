@@ -25,26 +25,98 @@
   *       Note:            Because this is a circular linked list, the last
   *                        node points to the starting node, not Null).
   */
+  var numToDo = 0;
+  var numHaveDone = 0;
+  var lastFoodRow = -1;
+  var lastFoodCol = 1;
+  var minimumDistance = 10000000000;
 
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
-  var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-  if(result===-1){
-		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
-	}
-/*
-	var convexHull = new ConvexHullGrahamScan();
-	for (var x = 1; x < grid.length-1; x++) {
-			for (var y = 1; y < grid[0].length-1; y++) {
-				if (grid[x][y] == 1)
-					convexHull.addPoint(x, y);
-			}
-	}
-	var hull = convexHull.getHull();
-	var output = "";
-	for (var i = 0; i < hull.length; i++) {
-		output += "(" + hull[i].x + "," + hull[i].y + "),";
-	}
-	console.log(output);
-*/
-	return result;
+  // using length to food to determine when to do astar - working (we think)
+  if (lastFoodRow != fRow || lastFoodCol != fCol) {
+    lastFoodRow = fRow;
+    lastFoodCol = fCol;
+    console.log("resetting..");
+    var node = snakeBody.b0;
+    var length = 1;
+    do {
+      node = node.next;
+      length++;
+    } while (node != snakeBody.b0);
+    numToDo = length * 2;
+    numHaveDone = 0;
+    var minimumDistance = 10000000000;
+  }
+  var result;
+  if (numToDo > numHaveDone || astar_length(grid, hRow, hCol, fRow, fCol,snakeBody) - 5 > minimumDistance) {
+    console.log("stacking...");
+    result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
+    numHaveDone++;
+  } else {
+    console.log("astar...");
+    result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+    if(result===-1){
+      result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
+    }
+  }
+  minimumDistance = Math.min(minimumDistance,astar_length(grid, hRow, hCol, fRow, fCol,snakeBody));
+
+  // using length of snake to determine how many times to stack off to side
+  // works (we think)
+  // if (lastFoodRow != fRow || lastFoodCol != fCol) {
+  //   lastFoodRow = fRow;
+  //   lastFoodCol = fCol;
+  //   console.log("resetting..");
+  //   var node = snakeBody.b0;
+  //   var length = 1;
+  //   do {
+  //     node = node.next;
+  //     length++;
+  //   } while (node != snakeBody.b0);
+  //   numToDo = length * 2;
+  //   numHaveDone = 0;
+  // }
+  // var result;
+  // if (numToDo > numHaveDone) {
+  //   console.log("stacking...");
+  //   result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
+  //   numHaveDone++;
+  // } else {
+  //   console.log("astar...");
+  //   result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+  //   if(result===-1){
+  // 		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
+  // 	}
+  // }
+  // console.log("Length to food = " + astar_length(grid, hRow, hCol, fRow, fCol,snakeBody));
+
+
+
+
+// using convex hull
+
+	// var convexHull = new ConvexHullGrahamScan();
+	// var node = snakeBody.b0;
+ //  do {
+ //    convexHull.addPoint(node.col, node.row);
+ //    node = node.next;
+ //  } while (node != snakeBody.b0);
+ //  var hullSnake = convexHull.getHull();
+
+ //  var convexHullEmptySpace
+ //  for (var x = 1; x < grid.length-1; x++) {
+ //      for (var y = 1; y < grid[0].length-1; y++) {
+	// 			if (grid[x][y] == 0)
+	// 				convexHullEmptySpace.addPoint(x, y);
+	// 		}
+	// }
+ //  var hullEmptySpace = convexHullEmptySpace.getHull();
+	
+	// var output = "";
+	// for (var i = 0; i < hull.length; i++) {
+	// 	output += "(" + hull[i].x + "," + hull[i].y + "),";
+	// }
+	// console.log(output);
+
+	// return result;
 }

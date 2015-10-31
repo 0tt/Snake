@@ -1,3 +1,4 @@
+
 /**
  * Graham's Scan Convex Hull Algorithm
  * @desc An implementation of the Graham's Scan Convex Hull algorithm in Javascript.
