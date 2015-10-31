@@ -10,7 +10,6 @@
 function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, snakeLength, recurseCounter) {
 	// Direction to move
 	var directionToMove = 0;
-<<<<<<< HEAD
 //	console.log(headCol + " " + headRow);
 
 	// Determine if we want to seek to an edge or stack
@@ -20,7 +19,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 	numBlocksByHead += (grid[headRow-1][headCol] > 0) ? 1 : 0;
 	numBlocksByHead += (grid[headRow+1][headCol] > 0) ? 1 : 0;
 //	console.log("blocks by head:" + numBlocksByHead);	
-=======
 	if (headCol === 0 || headRow === 0) {
 		console.log("OH CRAP, WE DUN GOOFED");
 	}
@@ -33,7 +31,6 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 	numBlocksByHead += (headRow-1 < 0 || grid[headRow-1][headCol] > 0) ? 1 : 0;
 	numBlocksByHead += (headRow+1 >= grid.length || grid[headRow+1][headCol] > 0) ? 1 : 0;
 	console.log("blocks by head:" + numBlocksByHead);	
->>>>>>> 9c50c278f2eff1d5d98921aa2a81e36aed09b844
 	
 //	console.log("l" + grid[headRow][headCol-1]);
 //	console.log("r" + grid[headRow][headCol+1]);
@@ -50,17 +47,15 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 		switch (currentDirection) {
 			case 0:
 				// Up
-<<<<<<< HEAD
 				if (grid[headRow - 1][headCol] > 0) {
 //					console.log("up occupied: " + grid[headRow - 1][headCol]);
 					if (grid[headRow][headCol-1] <= 0) {
 //						console.log("Moving left: " + grid[headRow][headCol - 1]);
-=======
+
 				if (headRow-1 < 0 || grid[headRow - 1][headCol] > 0) {
 					console.log("up occupied: " + grid[headRow - 1][headCol]);
 					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
 						console.log("Moving left: " + grid[headRow][headCol - 1]);
->>>>>>> 9c50c278f2eff1d5d98921aa2a81e36aed09b844
 						directionToMove = 3;
 						turn = true;
 					} else if (headCol+1 < grid[0].length && grid[headRow][headCol+1] <= 0) {
@@ -71,15 +66,13 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 1:
 				// Right
-<<<<<<< HEAD
 				if (grid[headRow][headCol+1] > 0) {
 					// console.log("right occupied: " + grid[headRow][headCol+1]);
 					if (grid[headRow+1][headCol] <= 0) {
-=======
+
 				if (headCol+1 >= grid[0].length || grid[headRow][headCol+1] > 0) {
 					console.log("right occupied: " + grid[headRow][headCol+1]);
 					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
->>>>>>> 9c50c278f2eff1d5d98921aa2a81e36aed09b844
 						directionToMove = 2;
 						turn = true;
 					} else if (headRow-1 >= 0 && grid[headRow-1][headCol] <= 0) {
@@ -90,17 +83,14 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 2:
 				// Down
-<<<<<<< HEAD
 				if (grid[headRow+1][headCol] > 0) {
 					// console.log("down occupied: " + grid[headRow+1][headCol]);
 					if (grid[headRow][headCol-1] <= 0) {
 						// console.log("Moving left: " + grid[headRow][headCol-1]);
-=======
 				if (headRow+1 >= grid.length || grid[headRow+1][headCol] > 0) {
 					console.log("down occupied: " + grid[headRow+1][headCol]);
 					if (headCol-1 >= 0 && grid[headRow][headCol-1] <= 0) {
 						console.log("Moving left: " + grid[headRow][headCol-1]);
->>>>>>> 9c50c278f2eff1d5d98921aa2a81e36aed09b844
 						directionToMove = 3;
 						turn = true;
 					} else if (headCol+1 < grid[0].length && grid[headRow][headCol+1] <= 0) {
@@ -111,15 +101,13 @@ function stackOff(currentDirection, grid, headRow,  headCol, foodRow, foodCol, s
 				break;
 			case 3:
 				// Left
-<<<<<<< HEAD
 				if (grid[headRow][headCol-1] > 0) {
 					// console.log("left occupied: " + grid[headRow][headCol-1]);
 					if (grid[headRow+1][headCol] <= 0) {
-=======
+
 				if (headCol-1 < 0 || grid[headRow][headCol-1] > 0) {
 					console.log("left occupied: " + grid[headRow][headCol-1]);
 					if (headRow+1 < grid.length && grid[headRow+1][headCol] <= 0) {
->>>>>>> 9c50c278f2eff1d5d98921aa2a81e36aed09b844
 						directionToMove = 2;
 						turn = true;
 					} else if (headRow-1 >= 0 && grid[headRow-1][headCol] <= 0) {
