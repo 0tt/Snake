@@ -55,7 +55,7 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
     force = false;
   }
   var result;
-  if (  numToDo > numHaveDone ||  force || astar_object.len > minimumDistance) {
+  if ( /* numToDo > numHaveDone || */ force || astar_object.len > minimumDistance) {
     console.log("stacking...");
     result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
     numHaveDone++;
