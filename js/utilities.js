@@ -1,7 +1,7 @@
 // converts a tile list to a path
 function convertTileListToPath(tilePath) {
   var path = [];
-  for(var i = 1; i < filePath.length; i++) {
+  for(var i = 1; i < tilePath.length; i++) {
     var firstItem = tilePath[i-1];
     var secondItem = tilePath[i];
     if (secondItem.x > firstItem.x) 
@@ -160,13 +160,13 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 				if (adjacent[i].x == endX && adjacent[i].y == endY) {
 					var secondItem = newlist[1];
 					if (secondItem.x > startX) 
-						return {dir:2,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newList)};
+						return {dir:2,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
 					else if (secondItem.x < startX)
-						return {dir:0,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newList)};
+						return {dir:0,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
 					else if (secondItem.y > startY)
-						return {dir:1,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newList)};
+						return {dir:1,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
 					else
-						return {dir:3,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newList)};
+						return {dir:3,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
 				}
 				var addTo = {
 					point: gridPoints[adjacent[i].x][adjacent[i].y],
