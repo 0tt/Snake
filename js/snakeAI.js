@@ -31,6 +31,23 @@
   var lastFoodCol = 1;
   var minimumDistance = 10000000000;
 
+function convertTileListToPath(tilePath) {
+  var path = [];
+  for(var i = 1; i < filePath.length; i++) {
+    var firstItem = tilePath[i-1];
+    var secondItem = tilePath[i];
+    if (secondItem.x > firstItem.x) 
+      path.push(2);
+    else if (secondItem.x < firstItem.x)
+      path.push(0);
+    else if (secondItem.y > firstItem.y)
+      path.push(1);
+    else
+      path.push(3);
+  }
+  return path;
+}
+
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
   // var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
 
