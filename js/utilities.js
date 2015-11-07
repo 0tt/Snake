@@ -117,7 +117,11 @@ function f(obj,endX,endY) {
   * startX, startY: The head of the snake
   * endX, endY: The food location
   * snakeBody: A circular linked list of the snake body. View snakeAI.js for more info
-  * returns: 0..3 depending on where the first move towards the goal from the start is. View snakeAI.js for what 0..3 correspond to.
+  * returns: an object with the following properties
+  *     dir: 0..3 depending on where the first move towards the goal from the start is. View snakeAI.js for what 0..3 correspond to.
+  *     len: the length of the path to the goal
+  *     pathOfTiles: An array of tiles corresponding to a path from the start to the end
+  *     pathOfDirs: An array of dir ints corresponding to a path from the start to the end
   */
   
 function astar(grid, startX, startY, endX, endY, snakeBody) {
@@ -177,51 +181,51 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 }
 
 // returns the length to the food from the head of the snake
-function astar_length(grid, startX, startY, endX, endY, snakeBody) {
-	var gridPoints = [];
-	for (var i = 0; i < grid.length; i++) {
-		gridPoints.push([]);
-		for(var j = 0; j < grid.length; j++){
-			gridPoints[i].push(pointOfGrid(i,j, grid[i][j]));
-		}
-	}
-	var first = {
-		point:gridPoints[startX][startY],
-		list:[gridPoints[startX][startY]],
-	};
-	first.point.visited = true;
-	var processingList = [];
-	processingList.push(first);
-	while(processingList.length !== 0) {
-		var current = processingList[0];
-		var remove = 0;
-		for (var i = 1; i < processingList.length; i++) {
-			if (f(current, endX, endY) > f(processingList[i],endX, endY)) {
-				current = processingList[i];
-				remove = i;
-			}
-		}
-		processingList.splice(remove,1);
-		var adjacent = getAdjacent(gridPoints, current.point, snakeBody, current.list);
-		for(var i =  0; i < adjacent.length; i++)
-		{
-			if(!adjacent[i].visited)
-			{
-				adjacent[i].visited = true;
-				var newlist = current.list.slice();
-				newlist.push(adjacent[i]);
-				if (adjacent[i].x == endX && adjacent[i].y == endY) {
-					var secondItem = newlist[1];
-					return newlist.length;
-				}
-				var addTo = {
-					point: gridPoints[adjacent[i].x][adjacent[i].y],
-					list: newlist
-				};
-				processingList.push(addTo);
-			}
-		}
-	}
-	console.log("A* has been executed and has been unable to find a path.");
-	return Number.MAX_SAFE_INTEGER;
-}
+// function astar_length(grid, startX, startY, endX, endY, snakeBody) {
+// 	var gridPoints = [];
+// 	for (var i = 0; i < grid.length; i++) {
+// 		gridPoints.push([]);
+// 		for(var j = 0; j < grid.length; j++){
+// 			gridPoints[i].push(pointOfGrid(i,j, grid[i][j]));
+// 		}
+// 	}
+// 	var first = {
+// 		point:gridPoints[startX][startY],
+// 		list:[gridPoints[startX][startY]],
+// 	};
+// 	first.point.visited = true;
+// 	var processingList = [];
+// 	processingList.push(first);
+// 	while(processingList.length !== 0) {
+// 		var current = processingList[0];
+// 		var remove = 0;
+// 		for (var i = 1; i < processingList.length; i++) {
+// 			if (f(current, endX, endY) > f(processingList[i],endX, endY)) {
+// 				current = processingList[i];
+// 				remove = i;
+// 			}
+// 		}
+// 		processingList.splice(remove,1);
+// 		var adjacent = getAdjacent(gridPoints, current.point, snakeBody, current.list);
+// 		for(var i =  0; i < adjacent.length; i++)
+// 		{
+// 			if(!adjacent[i].visited)
+// 			{
+// 				adjacent[i].visited = true;
+// 				var newlist = current.list.slice();
+// 				newlist.push(adjacent[i]);
+// 				if (adjacent[i].x == endX && adjacent[i].y == endY) {
+// 					var secondItem = newlist[1];
+// 					return newlist.length;
+// 				}
+// 				var addTo = {
+// 					point: gridPoints[adjacent[i].x][adjacent[i].y],
+// 					list: newlist
+// 				};
+// 				processingList.push(addTo);
+// 			}
+// 		}
+// 	}
+// 	console.log("A* has been executed and has been unable to find a path.");
+// 	return Number.MAX_SAFE_INTEGER;
+// }
