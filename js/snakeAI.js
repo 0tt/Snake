@@ -31,113 +31,40 @@
   var lastFoodCol = 1;
   var minimumDistance = 10000000000;
 	var foodDestination=true;
-	var path_info;
+	var path_info={len:-1};
+	var pathPosition=0;
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
   // var result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-	if(lastFoodRow!=fRow||lastFoodCol!=fCol){
-		foodDestination=false;
+	if (pathPosition >= path_info.len - 1) {
+		pathPosition = 0;
+		var butt = snakeBody.b0;
+		while (butt.next != snakeBody.b0) {
+			butt = butt.next;
+		}
+		var head_to_tail = astar(grid, hRow, hCol, butt.row, butt.col,snakeBody);
+		var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+		var new_grid = [];
+		for(var i=0;i<grid.length;i++) {
+			new_grid[i]=[];
+			for (var j = 0; j < grid[i].length; j++) {
+					new_grid[i][j] = grid[i][j];
+			}
+		}
+		for(var i=0;i<head_to_food.len;i++)
+		{
+			var point=head_to_food.path[i];
+			new_grid[point.x][point.y]=1;
+		}
+		var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody);
+		if (head_to_food.path == null || food_to_tail.path == null) {
+			path_info = head_to_tail;
+		}
+		else {
+			var new_path = head_to_food.path.push(food_to_tail.path);
+			var head_to_food_to_tail = {len:new_path.length,path:new_path};''
+			path_info = head_to_food_to_tail;
+			console.log(path_info);
+		}
 	}
-	if(foodDestination){
-  	path_info = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-	}else{
-  	path_info = astar(grid, hRow, hCol, snakeBody[snakeBody.length-1].x, snakeBody[snakeBody.length-1].y,snakeBody);
-	}
-	console.log(path_info.path);
-	return path_info.dir;
-
-  // using length to food to determine when to do astar - working (we think)
-//  var force = false;
-//  var astar_object = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-//  if (lastFoodRow != fRow || lastFoodCol != fCol) {
-//    lastFoodRow = fRow;
-//    lastFoodCol = fCol;
-//    console.log("resetting..");
-//    var node = snakeBody.b0;
-//    var length = 1;
-//    do {
-//      node = node.next;
-//      length++;
-//    } while (node != snakeBody.b0);
-//    numToDo = Math.floor(length * 1.2);
-//    numHaveDone = 0;
-//    var minimumDistance = 10000000000;
-//    force = true;
-//  } else {
-//    force = false;
-//  }
-//  var result;
-//  if ( /* numToDo > numHaveDone || */ force || astar_object.len > minimumDistance) {
-//    console.log("stacking...");
-//    result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
-//    numHaveDone++;
-//  } else {
-//    console.log("astar...");
-//    result = astar_object.dir;
-//    if(result===-1){
-//      result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
-//    }
-//    minimumDistance = Math.min(minimumDistance,astar_object.len);
-//  }
-	
-  
-
-  // using length of snake to determine how many times to stack off to side
-  // works (we think)
-  // if (lastFoodRow != fRow || lastFoodCol != fCol) {
-  //   lastFoodRow = fRow;
-  //   lastFoodCol = fCol;
-  //   console.log("resetting..");
-  //   var node = snakeBody.b0;
-  //   var length = 1;
-  //   do {
-  //     node = node.next;
-  //     length++;
-  //   } while (node != snakeBody.b0);
-  //   numToDo = length * 2;
-  //   numHaveDone = 0;
-  // }
-  // var result;
-  // if (numToDo > numHaveDone) {
-  //   console.log("stacking...");
-  //   result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
-  //   numHaveDone++;
-  // } else {
-  //   console.log("astar...");
-  //   result = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-  //   if(result===-1){
-  // 		result=stackOff(currentDirection,grid, hRow, hCol, fRow, fCol,snakeLength,0);
-  // 	}
-  // }
-  // console.log("Length to food = " + astar_length(grid, hRow, hCol, fRow, fCol,snakeBody));
-
-
-
-
-// using convex hull
-	// var convexHull = new ConvexHullGrahamScan();
-	// var node = snakeBody.b0;
- //  do {
- //    convexHull.addPoint(node.col, node.row);
- //    node = node.next;
- //  } while (node != snakeBody.b0);
- //  var hullSnake = convexHull.getHull();
-
- //  var convexHullEmptySpace
- //  for (var x = 1; x < grid.length-1; x++) {
- //      for (var y = 1; y < grid[0].length-1; y++) {
-	// 			if (grid[x][y] == 0)
-	// 				convexHullEmptySpace.addPoint(x, y);
-	// 		}
-	// }
- //  var hullEmptySpace = convexHullEmptySpace.getHull();
-	
-	// var output = "";
-	// for (var i = 0; i < hull.length; i++) {
-	// 	output += "(" + hull[i].x + "," + hull[i].y + "),";
-	// }
-	// console.log(output);
-
-
-
-	return result;
+	return path_info.path[pathPosition];
 }
