@@ -42,7 +42,9 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
 			butt = butt.next;
 		}
 		var head_to_tail = astar(grid, hRow, hCol, butt.row, butt.col,snakeBody);
+		console.log(head_to_tail);
 		var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+		console.log(head_to_food);
 		var new_grid = [];
 		for(var i=0;i<grid.length;i++) {
 			new_grid[i]=[];
@@ -52,19 +54,30 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
 		}
 		for(var i=0;i<head_to_food.len;i++)
 		{
-			var point=head_to_food.path[i];
+			var point=head_to_food.pathOfTiles[i];
 			new_grid[point.x][point.y]=1;
 		}
+		grid_str="";
+		for(var i=0;i<new_grid.length;i++) {
+			for (var j = 0; j < new_grid[i].length; j++) {
+					grid_str+=new_grid[i][j];
+			}
+			grid_str+="\n";
+		}
+		console.log(grid_str);
 		var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody);
-		if (head_to_food.path == null || food_to_tail.path == null) {
+		console.log(food_to_tail);
+		if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
 			path_info = head_to_tail;
 		}
 		else {
-			var new_path = head_to_food.path.push(food_to_tail.path);
-			var head_to_food_to_tail = {len:new_path.length,path:new_path};''
+			var new_path = head_to_food.pathOfDirs.push(food_to_tail.pathOfDirs);
+			var head_to_food_to_tail = {len:new_path.length,pathOfDirs:new_path};''
 			path_info = head_to_food_to_tail;
-			console.log(path_info);
 		}
+		console.log(path_info);
 	}
-	return path_info.path[pathPosition];
+	var dir= path_info.pathOfDirs[pathPosition];
+	pathPosition++;
+	return dir;
 }
