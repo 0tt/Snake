@@ -25,12 +25,6 @@
   *       Note:            Because this is a circular linked list, the last
   *                        node points to the starting node, not Null).
 */
-var numToDo = 0;
-var numHaveDone = 0;
-var lastFoodRow = -1;
-var lastFoodCol = 1;
-var minimumDistance = 10000000000;
-var foodDestination=true;
 var path_info={len:-1};
 var pathPosition=0;
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
@@ -78,13 +72,37 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   	else {
   		console.log("Picking head to food to tail");
   		var new_path = head_to_food.pathOfDirs.concat(food_to_tail.pathOfDirs);
-  		var head_to_food_to_tail = {len:new_path.length,pathOfDirs:new_path};
+  		var new_tiles=head_to_food.pathOfTiles.concat(food_to_tail.pathOfTiles);
+  		var head_to_food_to_tail = {len:new_path.length,pathOfDirs:new_path,pathOfTiles:new_tiles};
   		path_info = head_to_food_to_tail;
   	}
   	console.log(path_info);
+  	var new_grid = [];
+  	for(var i=0;i<grid.length;i++) {
+  		new_grid[i]=[];
+  		for (var j = 0; j < grid[i].length; j++) {
+  			if(i==butt.row&&j==butt.col){
+  				new_grid[i][j] = 0;
+  			}else{
+  				new_grid[i][j] = grid[i][j];
+  			}
+  		}
+  	}
+  	for(var i=1;i<path_info.len;i++)
+  	{
+  		var point=path_info.pathOfTiles[i];
+  		new_grid[point.x][point.y]=1;
+  	}
+  	grid_str="";
+  	for(var i=0;i<new_grid.length;i++) {
+  		for (var j = 0; j < new_grid[i].length; j++) {
+  			grid_str+=new_grid[i][j];
+  		}
+  		grid_str+="\n";
+  	}
+  	console.log(grid_str);
   }
   var dir= path_info.pathOfDirs[pathPosition];
   pathPosition++;
-  console.log(dir);
   return dir;
 }
