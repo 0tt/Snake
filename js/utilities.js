@@ -176,6 +176,6 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 			}
 		}
 	}
-	console.log("A* has been executed and has been unable to find a path.");
+	//console.log("A* has been executed and has been unable to find a path.");
 	return {dir:-1,len:Number.MAX_SAFE_INTEGER, pathOfTiles:null, pathOfDirs:null};
 }
