@@ -27,6 +27,7 @@
 */
 var path_info={len:-1};
 var pathPosition=0;
+var grid_str="";
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
   if (pathPosition >= path_info.len) {
   	pathPosition = 0;
@@ -41,7 +42,7 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   		new_grid[i]=[];
   		for (var j = 0; j < grid[i].length; j++) {
   			if(i==butt.row&&j==butt.col){
-  				new_grid[i][j] = 0;
+  				new_grid[i][j] = -2;
   			}else{
   				new_grid[i][j] = grid[i][j];
   			}
@@ -76,17 +77,6 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   		path_info = head_to_food_to_tail;
   	}
   	console.log(path_info);
-  	var new_grid = [];
-  	for(var i=0;i<grid.length;i++) {
-  		new_grid[i]=[];
-  		for (var j = 0; j < grid[i].length; j++) {
-  			if(i==butt.row&&j==butt.col){
-  				new_grid[i][j] = 0;
-  			}else{
-  				new_grid[i][j] = grid[i][j];
-  			}
-  		}
-  	}
   	for(var i=1;i<path_info.len;i++)
   	{
   		var point=path_info.pathOfTiles[i];
@@ -103,5 +93,6 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   }
   var dir= path_info.pathOfDirs[pathPosition];
   pathPosition++;
+  console.log(dir);
   return dir;
 }

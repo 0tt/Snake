@@ -23,12 +23,12 @@ function isTraversable(snakeBody, point, path) {
 	if (point.value < 1)
 		return true;
 	else {
-		var node = snakeBody.b0;
+		/*var node = snakeBody.b0;
 		for (var i = 0; i < path.length; i++) {
 			if (node.x == point.x && node.y == point.y)
 				return true;
 			node = node.next;
-		}
+		}*/
 		return false;
 	}
 }

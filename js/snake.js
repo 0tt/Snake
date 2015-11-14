@@ -8,7 +8,7 @@ http://patorjk.com/games/snake
  * @module Snake
  * @class SNAKE
  */
-var DEBUG=false;
+var DEBUG=true;
 var threshold = 25;
 if(DEBUG){
 	threshold=1000;
@@ -124,7 +124,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 			var me = this,
 			    playingBoard = config.playingBoard,
 			    myId = instanceNumber++,
-			    growthIncr = 5,
+			    growthIncr = 1,
 			    moveQueue = [], // a queue that holds the next moves of the snake
 			    currentDirection = 1, // 0: up, 1: left, 2: down, 3: right
 			    columnShift = [0, 1, 0, -1],
@@ -319,10 +319,14 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 					if (temp.isNaN)
 						throw "temp is NaN";
 					var time = performance.now() - startTime;
+					if(!DEBUG){
 					if (time < threshold)
 						currentDirection = temp;
 					else
 						console.log("ERROR: We didn't calculate the move in time!");
+					}else{
+						currentDirection = temp;
+					}
 					var newHeadR = newHead.row;
 					var newHeadC = newHead.col;
 					switch(temp) {
@@ -1019,13 +1023,13 @@ SNAKE.Board = SNAKE.Board || (function() {
 			config.left = (typeof config.left === "undefined") ? 0 : config.left;
 			config.width = (typeof config.width === "undefined") ? 400 : config.width;        
 			config.height = (typeof config.height === "undefined") ? 400 : config.height;
-
+/*
 			if (config.fullScreen) {
 				SNAKE.addEventListener(window,"resize", function() {
 						me.setupPlayingField();
 						}, false);
 			}
-
+*/
 			me.setBoardState(0);
 
 			if (config.boardContainer) {
