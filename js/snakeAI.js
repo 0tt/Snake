@@ -41,38 +41,44 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
 		while (butt.next != snakeBody.b0) {
 			butt = butt.next;
 		}
+		console.log(butt.row);
+		console.log(butt.col);
 		var head_to_tail = astar(grid, hRow, hCol, butt.row, butt.col,snakeBody);
-		console.log(head_to_tail);
+		if(head_to_tail.pathOfDirs==null){
+			console.log("Couldn't find head to tail path");
+		}
 		var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
-		console.log(head_to_food);
+		if(head_to_food.pathOfDirs==null){
+			console.log("Couldn't find head to food path");
+		}
 		var new_grid = [];
 		for(var i=0;i<grid.length;i++) {
 			new_grid[i]=[];
 			for (var j = 0; j < grid[i].length; j++) {
-					new_grid[i][j] = grid[i][j];
+					if(i==butt.row&&j==butt.col){
+						new_grid[i][j] = 0;
+					}else{
+						new_grid[i][j] = grid[i][j];
+					}
 			}
 		}
-		for(var i=0;i<head_to_food.len;i++)
+		for(var i=1;i<head_to_food.len;i++)
 		{
 			var point=head_to_food.pathOfTiles[i];
 			new_grid[point.x][point.y]=1;
 		}
-		grid_str="";
-		for(var i=0;i<new_grid.length;i++) {
-			for (var j = 0; j < new_grid[i].length; j++) {
-					grid_str+=new_grid[i][j];
-			}
-			grid_str+="\n";
-		}
-		console.log(grid_str);
 		var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody);
-		console.log(food_to_tail);
+		if(food_to_tail.pathOfDirs==null){
+			console.log("Couldn't find food to tail path");
+		}
 		if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
+			console.log("Picking head to tail");
 			path_info = head_to_tail;
 		}
 		else {
-			var new_path = head_to_food.pathOfDirs.push(food_to_tail.pathOfDirs);
-			var head_to_food_to_tail = {len:new_path.length,pathOfDirs:new_path};''
+			console.log("Picking head to food to tail");
+			var length = head_to_food.pathOfDirs.push(food_to_tail.pathOfDirs);
+			var head_to_food_to_tail = {len:length,pathOfDirs:head_to_food.pathOfDirs};
 			path_info = head_to_food_to_tail;
 		}
 		console.log(path_info);
