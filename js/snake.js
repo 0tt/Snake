@@ -10,13 +10,17 @@ http://patorjk.com/games/snake
  */
 var DEBUG=true;
 var threshold = 25;
+var foodToIncrease = 5;
+var globalSnakeLinkedList = null;
+var head = {row:2,col:2,next:null,prev:null};
+globalSnakeLinkedList = {head:head,tail:head,len:1};
 if(DEBUG){
 	threshold=1000;
 }
+
 var globalFrow = 0;
 var globalFcol = 0;
 var moveType = false;
-var foodToIncrease = 5;
 
 
 var SNAKE = SNAKE || {};
@@ -137,7 +141,6 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 			    isPaused = false;
 
 			// ----- public variables -----
-
 			me.snakeBody = {};
 			me.snakeBody["b0"] = new SnakeBlock(); // create snake head
 			me.snakeBody["b0"].row = config.startRow || 1;
@@ -259,6 +262,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 			 * @method go
 			 */
 			me.go = function() {
+
 				if (isDead) return;
 				var oldHead = me.snakeHead,
 				    newHead = me.snakeTail,
@@ -281,6 +285,33 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 				if (moveQueue.length){
 					myDirection = currentDirection = moveQueue.pop();
 				}
+
+				// handle the new linked list
+				var newHeadRR = globalSnakeLinkedList.head.row, newHeadCC = globalSnakeLinkedList.head.col;
+
+				switch(myDirection) {
+					case(0):
+						newHeadRR--;
+						break;
+					case(1):
+						newHeadCC++;
+						break;
+					case(2):
+						newHeadRR++;
+						break;
+					case(3):
+							newHeadCC--;
+				}
+				var newHeadNode = {row:newHeadRR,col:newHeadCC,next:globalSnakeLinkedList.head,prev:null};
+				globalSnakeLinkedList.head.prev = newHeadNode;
+				globalSnakeLinkedList.head = newHeadNode;
+				if (globalSnakeLinkedList.len == me.snakeLength) {
+					globalSnakeLinkedList.tail.prev.next = null;
+					globalSnakeLinkedList.tail = globalSnakeLinkedList.tail.prev;
+				} else {
+					globalSnakeLinkedList.len++;
+				}
+				// end of handeling new linked list
 
 				newHead.col = oldHead.col + columnShift[myDirection];
 				newHead.row = oldHead.row + rowShift[myDirection];
@@ -316,7 +347,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 				try {
 
 					var startTime = performance.now();
-					var temp = calculateMove(moveType, currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody, me.snakeLength, me.snakeTail);
+					var temp = calculateMove(moveType, currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody, me.snakeLength, me.snakeTail, globalSnakeLinkedList);
 					if (temp.isNaN)
 						throw "temp is NaN";
 					var time = performance.now() - startTime;

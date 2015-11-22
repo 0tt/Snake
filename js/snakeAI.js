@@ -28,10 +28,12 @@
 var path_info={len:-1};
 var pathPosition=0;
 var grid_str="";
-function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength, snakeTail) {
+function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength, snakeTail, globalSnakeLinkedList) {
   if (pathPosition >= path_info.len) {
+    console.log(globalSnakeLinkedList);
   	pathPosition = 0;
-  	var butt = snakeBody["b" + (snakeLength-1)];
+  	var butt = globalSnakeLinkedList.tail;
+    // var butt = snakeBody["b" + (snakeLength-1)];
   	// while (butt.next != snakeBody.b0) {
   	// 	butt = butt.next;
   	// }
