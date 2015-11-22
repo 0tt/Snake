@@ -28,13 +28,13 @@
 var path_info={len:-1};
 var pathPosition=0;
 var grid_str="";
-function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength) {
+function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength, snakeTail) {
   if (pathPosition >= path_info.len) {
   	pathPosition = 0;
-  	var butt = snakeBody.b0;
-  	while (butt.next != snakeBody.b0) {
-  		butt = butt.next;
-  	}
+  	var butt = snakeBody["b" + (snakeLength-1)];
+  	// while (butt.next != snakeBody.b0) {
+  	// 	butt = butt.next;
+  	// }
   	console.log(butt.row)
   	console.log(butt.col);
   	var new_grid = [];
@@ -48,6 +48,16 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   			}
   		}
   	}
+    grid_str="";
+    for(var i=0;i<new_grid.length;i++) {
+      for (var j = 0; j < new_grid[i].length; j++) {
+        grid_str+=new_grid[i][j];
+      }
+      grid_str+="\n";
+    }
+    console.log("=====BEFORE====");
+    console.log(grid_str);
+    console.log("===============");
   	var head_to_tail = astar(new_grid, hRow, hCol, butt.row, butt.col,snakeBody);
   	if(head_to_tail.pathOfDirs==null){
   		console.log("Couldn't find head to tail path");
@@ -55,12 +65,13 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   	var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
   	if(head_to_food.pathOfDirs==null){
   		console.log("Couldn't find head to food path");
-  	}
-  	for(var i=1;i<head_to_food.len;i++)
-  	{
-  		var point=head_to_food.pathOfTiles[i];
-  		new_grid[point.x][point.y]=1;
-  	}
+  	} else {
+    	for(var i=1;i<head_to_food.len;i++)
+    	{
+    		var point=head_to_food.pathOfTiles[i];
+    		new_grid[point.x][point.y]=1;
+    	}
+    }
   	var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody);
   	if(food_to_tail.pathOfDirs==null){
   		console.log("Couldn't find food to tail path");
@@ -68,6 +79,14 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   	if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
   		console.log("Picking head to tail");
   		path_info = head_to_tail;
+      console.log(path_info);
+      console.log(head_to_tail);
+      console.log("Next dir: " + path_info.pathOfDirs[pathPosition]);
+      if (head_to_tail.pathOfDirs == null) {
+
+        console.log("welp, gg");
+        while(true);
+      }
   	}
   	else {
   		console.log("Picking head to food to tail");

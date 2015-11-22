@@ -16,6 +16,7 @@ if(DEBUG){
 var globalFrow = 0;
 var globalFcol = 0;
 var moveType = false;
+var foodToIncrease = 5;
 
 
 var SNAKE = SNAKE || {};
@@ -124,7 +125,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 			var me = this,
 			    playingBoard = config.playingBoard,
 			    myId = instanceNumber++,
-			    growthIncr = 1,
+			    growthIncr = foodToIncrease,
 			    moveQueue = [], // a queue that holds the next moves of the snake
 			    currentDirection = 1, // 0: up, 1: left, 2: down, 3: right
 			    columnShift = [0, 1, 0, -1],
@@ -315,7 +316,7 @@ SNAKE.Snake = SNAKE.Snake || (function() {
 				try {
 
 					var startTime = performance.now();
-					var temp = calculateMove(moveType, currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody, me.snakeLength);
+					var temp = calculateMove(moveType, currentDirection, grid, globalFrow, globalFcol, newHead.row, newHead.col, me.snakeBody, me.snakeLength, me.snakeTail);
 					if (temp.isNaN)
 						throw "temp is NaN";
 					var time = performance.now() - startTime;

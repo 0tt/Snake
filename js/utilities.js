@@ -158,6 +158,11 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 				var newlist = current.list.slice();
 				newlist.push(adjacent[i]);
 				if (adjacent[i].x == endX && adjacent[i].y == endY) {
+					var addTo = {
+						point: gridPoints[adjacent[i].x][adjacent[i].y],
+						list: newlist
+					};
+					processingList.push(addTo);
 					var secondItem = newlist[1];
 					if (secondItem.x > startX) 
 						return {dir:2,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
@@ -168,6 +173,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 					else
 						return {dir:3,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
 				}
+				
 				var addTo = {
 					point: gridPoints[adjacent[i].x][adjacent[i].y],
 					list: newlist
@@ -176,6 +182,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 			}
 		}
 	}
+	console.log("WARNING:::: Startx=" + startX + ", StartY=" + startY + ", endX=" + endX + ", endY=" + endY);
 	//console.log("A* has been executed and has been unable to find a path.");
 	return {dir:-1,len:Number.MAX_SAFE_INTEGER, pathOfTiles:null, pathOfDirs:null};
 }
