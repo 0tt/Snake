@@ -80,7 +80,7 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   	}
   	if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
   		console.log("Picking head to tail");
-  		path_info = head_to_tail;
+  		path_info = {len:head_to_tail.pathOfDirs.length,pathOfDirs:head_to_tail.pathOfDirs,pathOfTiles:head_to_tail.pathOfTiles};
       console.log(path_info);
       console.log(head_to_tail);
       console.log("Next dir: " + path_info.pathOfDirs[pathPosition]);
@@ -114,6 +114,6 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   }
   var dir= path_info.pathOfDirs[pathPosition];
   pathPosition++;
-  console.log(dir);
+  console.log("Pos: "+(pathPosition-1)+"\tLen: "+path_info.len+"\tDir: "+dir);
   return dir;
 }
