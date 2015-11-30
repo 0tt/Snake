@@ -99,10 +99,12 @@ function diaginalPenalty(obj) {
 		} else if (list[i - 1].y < list[i].y) {
 			currentDirection = 3;
 		}
-		if (currentDirection != lastDirection)
+		if (currentDirection != lastDirection){
 			penalty++;
+		}
 		lastDirection = currentDirection;
 	}
+	return penalty;
 }
 
 function f(obj,endX,endY) {
