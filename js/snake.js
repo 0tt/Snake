@@ -10,7 +10,7 @@ http://patorjk.com/games/snake
  */
 var DEBUG=true;
 var threshold = 25;
-var foodToIncrease = 5;
+var foodToIncrease = 1;
 var globalSnakeLinkedList = null;
 var head = {row:2,col:2,next:null,prev:null};
 globalSnakeLinkedList = {head:head,tail:head,len:1};
