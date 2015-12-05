@@ -1,3 +1,34 @@
+// returns tail of list
+function getTail(head) {
+	var node = head;
+	while (node.next != head) {
+		node = node.next;
+	}
+	return node;
+}
+
+// returns length of list
+function getLength(head) {
+	var length = 1;
+	var node = head;
+	while (node.next != head) {
+		length++;
+	}
+	return length;
+}
+
+// returns the ith element of the list
+function getIthElement(head, i) {
+	var node = head;
+	if (getLength(head) > i) {
+		return null;
+	}
+	for (var j = 0; j < i; j++) {
+		node = node.next;
+	}
+	return node;
+}
+
 // converts a tile list to a path
 function convertTileListToPath(tilePath) {
   var path = [];
