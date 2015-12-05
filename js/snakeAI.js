@@ -28,17 +28,21 @@
 var path_info={len:-1};
 var pathPosition=0;
 var grid_str="";
+var callCount=0,prev_snakeLength=1;
 function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, snakeBody,snakeLength, snakeTail, globalSnakeLinkedList) {
   if (pathPosition >= path_info.len) {
-    console.log(globalSnakeLinkedList);
+	var pathId=0;
+	if(prev_snakeLength==snakeLength){
+		callCount++;
+	}else{
+		prev_snakeLength=snakeLength;
+	}
+	if(callCount>=2*snakeLength){
+		callCount=0;
+		pathId=1;
+	}
   	pathPosition = 0;
   	var butt = globalSnakeLinkedList.tail;
-    // var butt = snakeBody["b" + (snakeLength-1)];
-  	// while (butt.next != snakeBody.b0) {
-  	// 	butt = butt.next;
-  	// }
-  	console.log(butt.row)
-  	console.log(butt.col);
   	var new_grid = [];
   	for(var i=0;i<grid.length;i++) {
   		new_grid[i]=[];
@@ -60,11 +64,11 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
     console.log("=====BEFORE====");
     console.log(grid_str);
     console.log("===============");
-  	var head_to_tail = astar(new_grid, hRow, hCol, butt.row, butt.col,snakeBody);
+  	var head_to_tail = astar(new_grid, hRow, hCol, butt.row, butt.col,snakeBody)[pathId];
   	if(head_to_tail.pathOfDirs==null){
   		console.log("Couldn't find head to tail path");
   	}
-  	var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
+  	var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody)[0];
   	if(head_to_food.pathOfDirs==null){
   		console.log("Couldn't find head to food path");
   	} else {
@@ -74,7 +78,7 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
     		new_grid[point.x][point.y]=1;
     	}
     }
-  	var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody);
+  	var food_to_tail = astar(new_grid, fRow, fCol, butt.row, butt.col,snakeBody)[0];
   	if(food_to_tail.pathOfDirs==null){
   		console.log("Couldn't find food to tail path");
   	}

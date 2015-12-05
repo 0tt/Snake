@@ -138,6 +138,7 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 		point:gridPoints[startX][startY],
 		list:[gridPoints[startX][startY]],
 	};
+	var firstResult=null;
 	first.point.visited = true;
 	var processingList = [];
 	processingList.push(first);
@@ -160,20 +161,18 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 				var newlist = current.list.slice();
 				newlist.push(adjacent[i]);
 				if (adjacent[i].x == endX && adjacent[i].y == endY) {
+					console.log("found a path");
+					adjacent[i].visited = false;
 					var addTo = {
 						point: gridPoints[adjacent[i].x][adjacent[i].y],
 						list: newlist
 					};
 					processingList.push(addTo);
-					var secondItem = newlist[1];
-					if (secondItem.x > startX) 
-						return {dir:2,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
-					else if (secondItem.x < startX)
-						return {dir:0,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
-					else if (secondItem.y > startY)
-						return {dir:1,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
-					else
-						return {dir:3,len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
+					if(firstResult==null){
+						firstResult={len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)};
+					}else{
+						return [firstResult,{len:newlist.length,pathOfTiles:newlist,pathOfDirs:convertTileListToPath(newlist)}];
+					}
 				}
 				
 				var addTo = {
@@ -184,7 +183,11 @@ function astar(grid, startX, startY, endX, endY, snakeBody) {
 			}
 		}
 	}
+	if(firstResult!=null){
+		console.log("Returning firstResult twice");
+		return [firstResult,firstResult];
+	}
 	console.log("WARNING:::: Startx=" + startX + ", StartY=" + startY + ", endX=" + endX + ", endY=" + endY);
 	//console.log("A* has been executed and has been unable to find a path.");
-	return {dir:-1,len:Number.MAX_SAFE_INTEGER, pathOfTiles:null, pathOfDirs:null};
+	return [{dir:-1,len:Number.MAX_SAFE_INTEGER, pathOfTiles:null, pathOfDirs:null},{dir:-1,len:Number.MAX_SAFE_INTEGER, pathOfTiles:null, pathOfDirs:null}];
 }
