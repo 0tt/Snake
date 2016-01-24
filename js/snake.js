@@ -8,7 +8,7 @@ http://patorjk.com/games/snake
  * @module Snake
  * @class SNAKE
  */
-var DEBUG=true;
+var DEBUG=false;
 var threshold = 25;
 var foodToIncrease = 1;
 var globalSnakeLinkedList = null;
