@@ -60,10 +60,12 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
     console.log("=====BEFORE====");
     console.log(grid_str);
     console.log("===============");
+  	/*
   	var head_to_tail = astar(new_grid, hRow, hCol, butt.row, butt.col,snakeBody);
   	if(head_to_tail.pathOfDirs==null){
   		console.log("Couldn't find head to tail path");
   	}
+  	//*/
   	var head_to_food = astar(grid, hRow, hCol, fRow, fCol,snakeBody);
   	if(head_to_food.pathOfDirs==null){
   		console.log("Couldn't find head to food path");
@@ -78,7 +80,8 @@ function calculateMove(moveType,currentDirection, grid, fRow, fCol, hRow, hCol, 
   	if(food_to_tail.pathOfDirs==null){
   		console.log("Couldn't find food to tail path");
   	}
-  	if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
+  	//if (head_to_food.pathOfDirs == null || food_to_tail.pathOfDirs == null) {
+  	if (false) {
   		console.log("Picking head to tail");
   		path_info = {len:head_to_tail.pathOfDirs.length,pathOfDirs:head_to_tail.pathOfDirs,pathOfTiles:head_to_tail.pathOfTiles};
       console.log(path_info);
